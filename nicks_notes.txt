@@ -1,0 +1,12 @@
+Current challenge:
+Trying to pull notes information for patients
+I have a csv of all notes data, and a server of notes data
+Note data consists of discharge summaries and others
+    - the discharge summaries cannot be used as they contain expiration info
+
+I have a list of ids that the current interpolation network is using, I want to match these ids with the notes to make training easy
+I should consider using a bigram for TF-IDF to preserve meaning
+
+Using chartdate vs charttime for hour look ahead calculations
+    - all have chartdates, some don't have charttimes
+Some patients don't have any notes???
