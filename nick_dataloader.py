@@ -3,6 +3,7 @@
 #%env JDBC_PATH=../TAMU-MedResearch/postgresql-42.4.0.jar
 #%env PYSPARK_PYTHON=/home/ugrads/k/kingrc15/anaconda3/bin/python
 import sys, time, pickle
+from tqdm import tqdm 
 
 if "/home/ugrads/n/nickcheng0921/omop-summary" not in sys.path:
     sys.path.append("/home/ugrads/n/nickcheng0921/omop-summary")
@@ -14,7 +15,7 @@ sc, session = omop_summary.create_spark_context()
 chunk_num = 0
 if len(sys.argv) >= 2:
     chunk_num = int(sys.argv[1])
-print(f"Loading IDs: {1000+chunk_num*500} {1000+chunk_num*500+500-1}")
+print(f"Loading IDs: {5000+chunk_num*1000} {5000+chunk_num*1000+1000-1}")
 
 def tuplify(x):
     l = []
@@ -32,12 +33,12 @@ length_of_stay = omop_summary.utils.get_table("select hadm_id, admission_type, t
 
 start = time.time()
 data = []
-for idx in range(500): #FIXME hardcoded range
-    id = 1000+chunk_num*500+idx
+for idx in tqdm(range(1000)): #FIXME hardcoded range
+    id = 5000+chunk_num*1000+idx
     end = time.time()
     #vitals are added into the list respective to list_adm_id
-    
-    print(f"{idx+1}/500      {id}")
+
+    print(idx)
     #print(id, list_adm_id[id][0])
     vitals = []
 
@@ -185,7 +186,7 @@ for idx in range(500): #FIXME hardcoded range
 
     data.append(vitals)
 
-final_name = 'vitals_records_' + str(1000+chunk_num*500) + '_' + str(1000+chunk_num*500+500-1) + '.p' #FIXME hardcoded file name
+final_name = 'vitals_records_' + str(5000+chunk_num*1000) + '_' + str(5000+chunk_num*1000+1000-1) + '.p' #FIXME hardcoded file name
 pickle.dump(data, open(final_name, 'wb'))
 end = time.time()
-print(f"Total: {1.0*(end-start)/60} minutes")
+#print(f"Total: {1.0*(end-start)/60} minutes")
