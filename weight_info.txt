@@ -1,0 +1,14 @@
+Provides name and info of weights
+
+reg1.weights
+gpu_num = 1
+epoch = 50
+hid = 256 #can be 128-512
+ref_points = 128
+hours_look_ahead = 48
+epsilon = .0001 #small scalar to prevent numerical instabilities
+gamma = 1 #constant target value for SD
+vocabulary = 6000
+coef_var = 512
+coef_cov = 1
+coef_inv = 1
